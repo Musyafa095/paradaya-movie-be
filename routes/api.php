@@ -2,6 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\GenreController;
+use App\Http\Controllers\API\MovieController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\RoleController;
+use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('v1')->group(function(){
-  Route::apiResource('/genre', CategoryController::class);
-  Route::apiResource('/movie', NewsController::class); 
+  Route::apiResource('/genre', GenreController::class);
+  Route::apiResource('/movie', MovieController::class); 
 // middleware roleAdmin
   Route::middleware('auth:api', 'admin')->group(function(){
     Route::resource('role', RoleController::class);
@@ -31,6 +37,6 @@ Route::prefix('v1')->group(function(){
   })->middleware('api');
   //middleware update profile
   Route::post('/profile', [ProfileController::class, 'updateProfile'])->middleware(['auth:api', 'verifiedAccount']);
-  Route::post('/review', [CommentController::class, 'updateReview'])->middleware(['auth:api', 'verifiedAccount']);
+  Route::post('/review', [ReviewController::class, 'updateReview'])->middleware(['auth:api', 'verifiedAccount']);
   });
 
