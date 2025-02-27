@@ -10,7 +10,7 @@ class Review extends Model
 {
     use HasFactory, HasUuids;
     protected $table = 'reviews';
-    protected $fillable = ['critic', 'rating', 'user_id', 'movie_id'];
+    protected $fillable = ['comment', 'rating', 'user_id', 'movie_id'];
 
     public function user()
     {

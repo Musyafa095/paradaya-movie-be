@@ -12,12 +12,12 @@ class ReviewController extends Controller
 {
     public function updateReview(Request $request) {
         $request->validate([
-            'critic' => 'required|min:5',
+            'comment' => 'required|min:5',
             'rating' => 'required|integer|min:1|max:5',
             'movie_id' => 'required|exists:movies,id'
         ], [
-            'critic.required' => 'Kritik wajib diisi',
-            'critic.min' => 'Komentar minimal 5 karakter',
+            'comment.required' => 'Komentar wajib diisi',
+            'comment.min' => 'Komentar minimal 5 karakter',
             'movie_id.required' => 'ID movie wajib diisi',
             'rating.required' => 'Rating wajib diisi',
             'rating.integer' => 'Rating harus berupa angka',
@@ -41,16 +41,16 @@ class ReviewController extends Controller
         try {
             $review = Review::updateOrCreate(
                 ['user_id' => $user->id, 'movie_id' => $movie->id],
-                ['critic' => $request->input('critic'), 'rating' => $request->input('rating')]
+                ['comment' => $request->input('comment'), 'rating' => $request->input('rating')]
             );
     
             return response()->json([
-                'message' => 'Kritik berhasil dibuat/diupdate',
+                'message' => 'Komentar berhasil dibuat/diupdate',
                 'data' => $review,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Terjadi kesalahan saat menyimpan kritik',
+                'message' => 'Terjadi kesalahan saat menyimpan komentar',
                 'error' => $e->getMessage()
             ], 500);
         }

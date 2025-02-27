@@ -21,7 +21,7 @@ class MovieController extends Controller
             $query->where('name', "LIKE", "%$searching%");
         }
 
-        $per_page = $request->input('per_page', 8);
+        $per_page = $request->input('per_page', 12);
 
         $movies = $query->paginate($per_page);
 
@@ -37,7 +37,7 @@ class MovieController extends Controller
             'title' => 'required',
             'summary' => 'required',
             'poster' => "required|image|mimes:jpg,png,jpeg,gif,svg|max:2048",
-            'date' => 'required',
+            'year' => 'required',
             'genre_id' => 'required|exists:genres,id'
         ]);
         $uploadedFileUrl = cloudinary()->upload($request->file('poster')->getRealPath(), [
@@ -46,7 +46,7 @@ class MovieController extends Controller
             $movie = new Movie;
             $movie->title = $request->input('title');
             $movie ->summary = $request->input('summary');
-            $movie -> date = $request->input('date');
+            $movie -> year = $request->input('year');
             $movie -> genre_id = $request->input('genre_id');
             $movie -> poster = $uploadedFileUrl;
     
@@ -76,7 +76,7 @@ class MovieController extends Controller
             'poster' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'title' => 'required',
             'summary' => 'required',
-            'date' => 'required',
+            'year' => 'required',
             'genre_id' => 'required|exists:genres,id'
         ]);
 
@@ -98,7 +98,7 @@ class MovieController extends Controller
         
             $movie->title = $request->input('title');
             $movie ->summary = $request->input('summary');
-            $movie ->date = $request->input('date');
+            $movie ->year = $request->input('year');
             $movie ->genre_id = $request->input('genre_id');
       
     
