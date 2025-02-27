@@ -81,22 +81,25 @@ class MovieController extends Controller
         ]);
 
         $movie = Movie::find($id);
-        if ($request->hasFile('poster')) {
-            $uploadedFileUrl = cloudinary()->upload($request->file('poster')->getRealPath(), [
-                'folder' => 'poster',
-            ])->getSecurePath();
-            $movie -> poster = $uploadedFileUrl;
-        }
-       
+
         if (!$movie) {
             return response()->json([
                 'message' => 'Data movie tidak ditemukan',
             ], 404);
         }
+
+        if ($request->hasFile('poster')) {
+            $uploadedFileUrl = cloudinary()->upload($request->file('poster')->getRealPath(), [
+                'folder' => 'poster',
+            ])->getSecurePath();
+            $movie ->poster = $uploadedFileUrl;
+        }
+       
+        
             $movie->title = $request->input('title');
-            $movie -> summary = $request->input('summary');
-            $movie -> date = $request->input('date');
-            $movie -> genre_id = $request->input('genre_id');
+            $movie ->summary = $request->input('summary');
+            $movie ->date = $request->input('date');
+            $movie ->genre_id = $request->input('genre_id');
       
     
             $movie->save();
@@ -109,7 +112,15 @@ class MovieController extends Controller
     public function destroy($id)
     {
         $movie = Movie::find($id);
+        
+        if (!$movie) {
+            return response()->json([
+                'message' => 'Data movie tidak ditemukan',
+            ], 404);
+        }
+        
         $movie->delete();
+        
         return response()->json([
             'message' => 'Berhasil menghapus data movie'
         ], 200);
