@@ -10,7 +10,7 @@ class Movie extends Model
 {
     use HasFactory, HasUuids;
     protected $table = 'movies';
-    protected $fillable = ['title', 'summary', 'poster' , 'genre_id', 'year'];
+    protected $fillable = ['title', 'summary', 'poster' , 'genre_id', 'year', 'trailer_url', 'movie_url'];
 
    public function genre()
     {
