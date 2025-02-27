@@ -68,7 +68,7 @@ class AuthController extends Controller
         }, 'role'=> function($query){
             $query->select('id','name');
         },  'review' => function($query) {
-            $query->select('id', 'user_id', 'movie_id', 'critic', 'rating', 'created_at');
+            $query->select('id', 'user_id', 'movie_id', 'comment', 'rating', 'created_at');
         },
         'review.movie' => function($query) {
             $query->select('id', 'title', 'summary');
@@ -92,7 +92,7 @@ class AuthController extends Controller
             }, 'role'=> function($query){
                 $query->select('id','name');
             },  'review' => function($query) {
-                $query->select('id', 'user_id', 'movie_id', 'critic', 'rating', 'created_at');
+                $query->select('id', 'user_id', 'movie_id', 'comment', 'rating', 'created_at');
             },
             'review.movie' => function($query) {
                 $query->select('id', 'title', 'summary');
