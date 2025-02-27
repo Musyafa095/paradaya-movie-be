@@ -38,6 +38,8 @@ class MovieController extends Controller
             'summary' => 'required',
             'poster' => "required|image|mimes:jpg,png,jpeg,gif,svg|max:2048",
             'year' => 'required',
+            'trailer_url' => 'required',
+            'movie_url' => 'required',
             'genre_id' => 'required|exists:genres,id'
         ]);
         $uploadedFileUrl = cloudinary()->upload($request->file('poster')->getRealPath(), [
@@ -47,6 +49,8 @@ class MovieController extends Controller
             $movie->title = $request->input('title');
             $movie ->summary = $request->input('summary');
             $movie -> year = $request->input('year');
+            $movie -> trailer_url = $request->input('trailer_url');
+            $movie -> movie_url = $request->input('movie_url');
             $movie -> genre_id = $request->input('genre_id');
             $movie -> poster = $uploadedFileUrl;
     
@@ -77,6 +81,8 @@ class MovieController extends Controller
             'title' => 'required',
             'summary' => 'required',
             'year' => 'required',
+            'trailer_url' => 'required',
+            'movie_url' => 'required',
             'genre_id' => 'required|exists:genres,id'
         ]);
 
@@ -99,6 +105,8 @@ class MovieController extends Controller
             $movie->title = $request->input('title');
             $movie ->summary = $request->input('summary');
             $movie ->year = $request->input('year');
+            $movie ->trailer_url = $request->input('trailer_url');
+            $movie ->movie_url = $request->input('movie_url');
             $movie ->genre_id = $request->input('genre_id');
       
     

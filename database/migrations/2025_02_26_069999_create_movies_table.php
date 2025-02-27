@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title', 255);
-            $table->text('summary');
+            $table->text('summary')->nullable();
             $table->string('poster', 255);
             $table->year('year');
-            $table->uuid('genre_id');
+            $table->string('trailer_url')->nullable();
+            $table->string('movie_url')->nullable();
+            $table->uuid('genre_id')->nullable();
             $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
             $table->timestamps();
         });
