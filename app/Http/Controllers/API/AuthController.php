@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         $request->validate([
            'name' => 'required|min:2',
-           'email' => 'required|email|unique:users,id',
+           'email' => 'required|email|unique:users,email',
            'password' => 'required|min:8|confirmed'
         ],[
             'required' => 'inputan :attribute wajib diisi',
@@ -67,11 +67,11 @@ class AuthController extends Controller
             $query->select('user_id', 'age', 'bio', 'image');
         }, 'role'=> function($query){
             $query->select('id','name');
-        },  'comments' => function($query) {
-            $query->select('id', 'user_id', 'news_id', 'comment', 'created_at');
+        },  'review' => function($query) {
+            $query->select('id', 'user_id', 'movie_id', 'critic', 'rating', 'created_at');
         },
-        'comments.news' => function($query) {
-            $query->select('id', 'title', 'content');
+        'review.movie' => function($query) {
+            $query->select('id', 'title', 'summary');
         }])->first();
 
         return response()->json([
@@ -91,11 +91,11 @@ class AuthController extends Controller
                 $query->select('user_id', 'age', 'bio', 'image');
             }, 'role'=> function($query){
                 $query->select('id','name');
-            },  'comments' => function($query) {
-                $query->select('id', 'user_id', 'news_id', 'comment', 'created_at');
+            },  'review' => function($query) {
+                $query->select('id', 'user_id', 'movie_id', 'critic', 'rating', 'created_at');
             },
-            'comments.news' => function($query) {
-                $query->select('id', 'title', 'content');
+            'review.movie' => function($query) {
+                $query->select('id', 'title', 'summary');
             }])->find($user->id);
         return response()->json([
             'user' => $userData
@@ -125,6 +125,11 @@ class AuthController extends Controller
             'email' => 'inputan :attribute harus berformat email'
           ]);
           $user = User::where('email', $request->input('email'))->first();
+          if (!$user){
+            return response()->json([
+                'message' => 'User tidak ditemukan'
+            ], 404);
+          }
           $user->generate_otp();
         
           Mail::to($user->email)->send(new GenerateEmailMail($user));
@@ -139,7 +144,7 @@ class AuthController extends Controller
             'otp' => 'required|min:6',
         ],[
             'required' => 'inputan :attribute wajib diisi',
-            'min' => 'inputan maksimal :min karakter '
+            'min' => 'inputan :attribute minimal :min karakter '
         ]);
            $user = auth()->user();
            //Jika otp tidak ditemukan
