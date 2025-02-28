@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('comment')->nullable();
-            $table->integer('rating')->nullable();
+            $table->decimal('rating', 3, 1)->nullable();
             $table->uuid('movie_id');
             $table->uuid('user_id');
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
