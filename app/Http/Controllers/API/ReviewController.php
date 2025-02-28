@@ -13,7 +13,7 @@ class ReviewController extends Controller
     public function updateReview(Request $request) {
         $request->validate([
             'comment' => 'required|min:5',
-            'rating' => 'required|integer|min:1|max:10',
+            'rating' => 'required|numeric|min:1|max:10',
             'movie_id' => 'required|exists:movies,id'
         ], [
             'comment.required' => 'Komentar wajib diisi',
